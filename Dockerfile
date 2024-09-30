@@ -19,7 +19,7 @@ ENV SPARK_EXTRA_CLASSPATH='/opt/spark/jars/*'
 RUN mkdir -p "${SPARK_EXTRA_JARS_DIR}"
 
 #Uncomment below and replace EXTRA_JAR_NAME with the jar file name.
-#COPY "EXTRA_JAR_NAME" "${SPARK_EXTRA_JARS_DIR}"
+COPY lib/*.jar "${SPARK_EXTRA_JARS_DIR}"
 
 # (Optional) Install and configure Miniconda3.
 ENV CONDA_HOME=/opt/miniconda3
@@ -95,23 +95,23 @@ RUN mkdir -p "${PYTHONPATH}"
 COPY test_util.py "${PYTHONPATH}"
 
 # (Optional) Install R and R libraries.
-RUN apt update \
-  && apt install -y gnupg \
-  && apt-key adv --no-tty \
-      --keyserver "hkp://keyserver.ubuntu.com:80" \
-      --recv-keys E19F5F87128899B192B1A2C2AD5F960A256A04AF \
-  && echo "deb http://cloud.r-project.org/bin/linux/debian bullseye-cran40/" \
-      >/etc/apt/sources.list.d/cran-r.list \
-  && apt update \
-  && apt install -y \
-      libopenblas-base \
-      libssl-dev \
-      r-base \
-      r-base-dev \
-      r-recommended \
-      r-cran-blob
+#RUN apt update \
+#  && apt install -y gnupg \
+#  && apt-key adv --no-tty \
+#      --keyserver "hkp://keyserver.ubuntu.com:80" \
+#      --recv-keys E19F5F87128899B192B1A2C2AD5F960A256A04AF \
+#  && echo "deb http://cloud.r-project.org/bin/linux/debian bullseye-cran40/" \
+#      >/etc/apt/sources.list.d/cran-r.list \
+#  && apt update \
+#  && apt install -y \
+#      libopenblas-base \
+#      libssl-dev \
+#      r-base \
+#      r-base-dev \
+#      r-recommended \
+#      r-cran-blob
 
-ENV R_HOME=/usr/lib/R
+#ENV R_HOME=/usr/lib/R
 
 # (Required) Create the 'spark' group/user.
 # The GID and UID must be 1099. Home directory is required.
